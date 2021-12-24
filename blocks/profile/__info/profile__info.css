@@ -7,3 +7,10 @@
     left: 150px;
     top: 22px;
 }
+
+@media screen and (max-width: 768px) {
+    .profile__info {
+        position: static;
+        margin: 22.25px auto 36px;
+    }
+}

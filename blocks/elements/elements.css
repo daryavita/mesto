@@ -7,3 +7,17 @@
     grid-template-columns: repeat(auto-fit, 282px);
     max-width: 880px;
 }
+
+@media screen and (max-width: 920px) {
+    .elements {
+        justify-content: center;
+    }
+}
+
+
+@media screen and (max-width: 768px) {
+    .elements {
+        margin: 36px auto 48px;
+        justify-content: center;
+    }
+}

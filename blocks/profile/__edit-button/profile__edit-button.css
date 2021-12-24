@@ -4,6 +4,14 @@
     background-image: url(../../../images/edit.svg);
     background-repeat: no-repeat;
     background-position: center;
+    background-color: black;
     border: 1px solid #FFF;
     margin: 15px 0 0 18px;
+    padding: 0;
+}
+
+@media screen and (max-width: 768px) {
+    .profile__edit-button {
+        margin: 8px 0 0 10px;
+    }
 }

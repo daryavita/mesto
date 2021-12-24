@@ -1,17 +1,14 @@
-/* .elements__like {
+.elements__like {
     background-image: url(../../../images/like.svg);
     background-size: contain;
+    background-color: #FFF;
+    background-repeat: no-repeat;
     width: 22px;
     height: 19px;
     position: absolute;
     top: 312px;
     right: 30px;
-} */
-
-.elements__like {
     margin: 0;
     padding: 0;
-    position: absolute;
-    top: 312px;
-    right: 30px;
+    border: 0px;
 }
