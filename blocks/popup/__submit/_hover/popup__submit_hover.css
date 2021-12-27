@@ -1,0 +1,4 @@
+.popup__submit_hover:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
