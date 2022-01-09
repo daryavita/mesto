@@ -1,6 +1,4 @@
-.elements__image {
-    /* max-height: 282px;
-    max-width: 282px; */
+.card__image {
     width: 100%;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
