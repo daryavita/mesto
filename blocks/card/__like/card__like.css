@@ -16,9 +16,3 @@
     cursor: pointer;
     transition: 0.2s ease-out;
 }
-
-.card__like:active {
-    background-image: url(../../../images/like-active.svg);
-    background-size: contain;
-    background-repeat: no-repeat;
-}

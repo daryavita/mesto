@@ -58,8 +58,8 @@
             <h3 class="popup__title">Новое место</h3>
             <form class="popup__form" name="addform">
                 <fieldset class="popup__profile-info">
-                    <input type="text" name="name" class="popup__input-info popup__input-info_type_name" value="" placeholder="Название">
-                    <input type="text" name="link" class="popup__input-info popup__input-info_type_job" value="" placeholder="Ссылка на картинку">
+                    <input type="text" name="name" class="popup__input-info popup__input-info_type_name-card" value="" placeholder="Название">
+                    <input type="text" name="link" class="popup__input-info popup__input-info_type_link-card" value="" placeholder="Ссылка на картинку">
                 </fieldset>
                 <button type="submit" class="popup__submit"
                     aria-label="Создать">Создать</button>
@@ -67,12 +67,20 @@
         </div>
     </div>
 
+    <figure class="popup popup-open-card">
+        <div class="popup-open-card__container">
+            <img src="" alt="" class="popup-open-card__image">
+            <button type="button" class="popup__close button-hover" aria-label="Закрыть"></button>
+            <figcaption class="popup-open-card__title">Новое место</figcaption>
+        </div>
+    </figure>
 
     <template class="cards-template">
         <li class="card">
+            <button type="button" class="card__delete button-hover" aria-label="Удалить"></button>
             <img src="" alt="" class="card__image">
             <div class="card__container">
-                <h2 class="card__title">Карачаево-Черкесия</h2>
+                <h2 class="card__title"></h2>
                 <button type="button" class="card__like" aria-label="Нравится"></button>
             </div>
         </li>
