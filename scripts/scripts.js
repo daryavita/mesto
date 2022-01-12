@@ -1,6 +1,6 @@
 // профиль
-let nameProfile = document.querySelector('.profile__title');
-let jobProfile = document.querySelector('.profile__subtitle');
+const nameProfile = document.querySelector('.profile__title');
+const jobProfile = document.querySelector('.profile__subtitle');
 
 // карточки
 const cardList = document.querySelector('.cards-list');
@@ -95,8 +95,8 @@ function likeCard(e) {
 
 function createCard (cardData) {
     const cardElement = cardTemplate.cloneNode(true);
-    let cardImage = cardElement.querySelector('.card__image');
-    let cardTitle = cardElement.querySelector('.card__title');
+    const cardImage = cardElement.querySelector('.card__image');
+    const cardTitle = cardElement.querySelector('.card__title');
     const cardLikeButton = cardElement.querySelector('.card__like');
     const cardDeleteButton = cardElement.querySelector('.card__delete');
 
