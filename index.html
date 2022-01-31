@@ -41,12 +41,14 @@
         <div class="popup__container">
             <button type="button" class="popup__close button-hover" aria-label="Закрыть"></button>
             <h3 class="popup__title">Редактировать профиль</h3>
-            <form class="popup__form" name="editform">
+            <form class="popup__form" name="editform" novalidate>
                 <fieldset class="popup__profile-info">
-                    <input type="text" name="name" class="popup__input-info popup__input-info_type_name" value="" placeholder="Имя">
-                    <input type="text" name="job" class="popup__input-info popup__input-info_type_job" value="" placeholder="О себе">
+                    <input type="text" name="name" class="popup__input-info popup__input-info_type_name popup__input-info_type_error" value="" placeholder="Имя" required minlength="2" maxlength="40">
+                    <span class="popup__error popup__error_visible"></span>
+                    <input type="text" name="job" class="popup__input-info popup__input-info_type_job popup__input-info_type_error" value="" placeholder="О себе" required minlength="2" maxlength="200">
+                    <span class="popup__error popup__error_visible"></span>
                 </fieldset>
-                <button type="submit" class="popup__submit"
+                <button type="submit" class="popup__submit popup__submit_disabled"
                     aria-label="Сохранить">Сохранить</button>
             </form>
         </div>
@@ -56,12 +58,14 @@
         <div class="popup__container">
             <button type="button" class="popup__close button-hover" aria-label="Закрыть"></button>
             <h3 class="popup__title">Новое место</h3>
-            <form class="popup__form" name="addform">
+            <form class="popup__form" name="addform" novalidate>
                 <fieldset class="popup__profile-info">
-                    <input type="text" name="name" class="popup__input-info popup__input-info_type_name-card" value="" placeholder="Название">
-                    <input type="text" name="link" class="popup__input-info popup__input-info_type_link-card" value="" placeholder="Ссылка на картинку">
+                    <input type="text" name="name" class="popup__input-info popup__input-info_type_name-card popup__input-info_type_error" value="" placeholder="Название" required minlength="2" maxlength="30">
+                    <span class="popup__error popup__error_visible"></span>
+                    <input type="url" name="link" class="popup__input-info popup__input-info_type_link-card popup__input-info_type_error" value="" placeholder="Ссылка на картинку" required>
+                    <span class="popup__error popup__error_visible"></span>
                 </fieldset>
-                <button type="submit" class="popup__submit"
+                <button type="submit" class="popup__submit popup__submit_disabled"
                     aria-label="Создать">Создать</button>
             </form>
         </div>
