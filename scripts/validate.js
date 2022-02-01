@@ -4,8 +4,8 @@ function submitForm(event) {
     console.log('submit'); 
 }
 
-function validateInput(form, input, {inputErrorClass, errorSelector, errorClass}) {
-    const errorContainer = form.querySelector(errorSelector);
+function validateInput(form, input, {inputErrorClass, errorClass}) {
+    const errorContainer = form.querySelector(`#${input.id}-error`);
     console.log(input.validationMessage)
 
     if (input.validity.valid) {
@@ -41,7 +41,7 @@ function enableValidation({ formSelector, inputSelector, ...rest }) {
 enableValidation( {
     formSelector: '.popup__form',
     inputSelector: '.popup__input-info',
-    errorSelector: '.popup__error',
+    // errorSelector: '.popup__error',
     inputErrorClass: 'popup__input-info_type_error',
     errorClass: 'popup__error_visible'
 });
