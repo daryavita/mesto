@@ -60,18 +60,24 @@ const openCardCloseButtonPopup = popupTypeOpenCard.querySelector('.popup__close'
 
 function openPopup(popup) {
     popup.classList.add('popup_opened');
-    document.addEventListener('keydown', closePopup);
+    document.addEventListener('keydown', closeEscPopup);
 }
 
-//закрытие по кнопке, оверлею и esc
 function closePopup(evt) {
+    console.log('zakryt')
+    if (evt.target === evt.currentTarget) {
+        popup.classList.remove('popup_opened');
+        document.removeEventListener('keydown', closeEscPopup);
+    }
+}
+
+function closeEscPopup(evt) {
     const popupOpened = document.querySelector('.popup_opened')
 
-    if (evt.target === evt.currentTarget || evt.keyCode === 27) {
-        popupOpened.classList.remove('popup_opened');
-        document.removeEventListener('keydown', closePopup);
-        formAddElement.reset();
-    }
+    if (evt.keyCode === 27) {
+        popupOpened.classList.remove('popup_opened')
+        document.removeEventListener('keydown', closeEscPopup);
+    } 
 }
 
 function editPopup() {
