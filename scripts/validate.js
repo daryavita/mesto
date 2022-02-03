@@ -1,7 +1,6 @@
 
 function submitForm(event) {
     event.preventDefault();
-    console.log('submit'); 
 }
 
 function showError (input, errorContainer, {inputErrorClass, errorClass}) {
@@ -56,7 +55,7 @@ function enableValidation({ formSelector, inputSelector, ...rest }) {
             });
         })
 
-        toggleButton(form, rest);
+        form.addEventListener('reset', () =>  toggleButton(form, rest));
     })
 };
 
