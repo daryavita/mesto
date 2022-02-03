@@ -5,32 +5,6 @@ const jobProfile = document.querySelector('.profile__subtitle');
 // карточки
 const cardList = document.querySelector('.cards-list');
 const cardTemplate = document.querySelector('.cards-template').content;
-const initialCards = [
-    {
-        name: 'Архыз',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-        name: 'Челябинская область',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-        name: 'Иваново',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-        name: 'Камчатка',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-        name: 'Великий Новгород',
-        link: 'https://images.unsplash.com/photo-1632214298882-03a0aa4bcc90?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1172&q=80'
-    },
-    {
-        name: 'Уралмаш',
-        link: 'https://images.unsplash.com/photo-1604314035762-38a690347d7f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=385&q=80'
-    }
-];
 
 // попапы
 const popup = document.querySelector('.popup');
@@ -64,9 +38,10 @@ function openPopup(popup) {
 }
 
 function closePopup(evt) {
-    console.log('zakryt')
     if (evt.target === evt.currentTarget) {
-        popup.classList.remove('popup_opened');
+        popupTypeEdit.classList.remove('popup_opened');
+        popupTypeAddCard.classList.remove('popup_opened');
+        popupTypeOpenCard.classList.remove('popup_opened');
         document.removeEventListener('keydown', closeEscPopup);
     }
 }
@@ -95,7 +70,7 @@ function editFormSubmit(evt) {
 
 function addCardFormSubmit(evt) {
     evt.preventDefault();
-    createCard({
+    renderCard({
         name: nameCardInput.value,
         link: linkCardInput.value
     });
@@ -132,27 +107,32 @@ function createCard(cardData) {
         popupCardtTitle.textContent = cardData.name;
         popupCardImage.alt = cardData.name.toLowerCase();
     });
-
-    cardList.prepend(cardElement);
+   
+    return cardElement 
 };
+
+function renderCard(cardData) {
+    const cardElement = createCard(cardData)
+    cardList.prepend(cardElement);
+}
 
 
 // открытие и закрытие попапа профиля
 editProfileButton.addEventListener('click', editPopup);
 popupTypeEdit.addEventListener('click', closePopup);
-editCloseButtonPopup.addEventListener('click', () => closePopup(popupTypeEdit));
+editCloseButtonPopup.addEventListener('click', closePopup);
 
 // открытие и закрытие попапа добавления карточек
 addCardProfileButton.addEventListener('click', () => openPopup(popupTypeAddCard));
 popupTypeAddCard.addEventListener('click', closePopup);
-addCardCloseButtonPopup.addEventListener('click', () => closePopup(popupTypeAddCard));
+addCardCloseButtonPopup.addEventListener('click', closePopup);
 
 // закрытие открытых карточек
 popupTypeOpenCard.addEventListener('click', closePopup);
-openCardCloseButtonPopup.addEventListener('click', () => closePopup(popupTypeOpenCard));
+openCardCloseButtonPopup.addEventListener('click', closePopup);
 
 //сабмиты попапов
 formEditElement.addEventListener('submit', editFormSubmit);
 formAddElement.addEventListener('submit', addCardFormSubmit);
 
-initialCards.forEach(createCard);
+initialCards.forEach(renderCard);
