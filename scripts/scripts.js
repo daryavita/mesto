@@ -37,21 +37,23 @@ function openPopup(popup) {
     document.addEventListener('keydown', closeEscPopup);
 }
 
-function closePopup(evt) {
-    if (evt.target === evt.currentTarget) {
-        popupTypeEdit.classList.remove('popup_opened');
-        popupTypeAddCard.classList.remove('popup_opened');
-        popupTypeOpenCard.classList.remove('popup_opened');
-        document.removeEventListener('keydown', closeEscPopup);
+function closePopup(popup) {
+    popup.classList.remove('popup_opened');
+    document.removeEventListener('keydown', closeEscPopup);
+}
+
+function closeOverlay(evt) {
+    if (evt.target.classList.contains('popup_opened')) {
+        closePopup(popupTypeEdit)
+        closePopup(popupTypeAddCard)
+        closePopup(popupTypeOpenCard)
     }
 }
 
 function closeEscPopup(evt) {
-    const popupOpened = document.querySelector('.popup_opened')
-
     if (evt.keyCode === 27) {
-        popupOpened.classList.remove('popup_opened')
-        document.removeEventListener('keydown', closeEscPopup);
+        const popupOpened = document.querySelector('.popup_opened')
+        closePopup(popupOpened)
     } 
 }
 
@@ -116,20 +118,19 @@ function renderCard(cardData) {
     cardList.prepend(cardElement);
 }
 
-
 // открытие и закрытие попапа профиля
 editProfileButton.addEventListener('click', editPopup);
-popupTypeEdit.addEventListener('click', closePopup);
-editCloseButtonPopup.addEventListener('click', closePopup);
+popupTypeEdit.addEventListener('click', closeOverlay);
+editCloseButtonPopup.addEventListener('click', () => closePopup(popupTypeEdit));
 
 // открытие и закрытие попапа добавления карточек
 addCardProfileButton.addEventListener('click', () => openPopup(popupTypeAddCard));
-popupTypeAddCard.addEventListener('click', closePopup);
-addCardCloseButtonPopup.addEventListener('click', closePopup);
+popupTypeAddCard.addEventListener('click', closeOverlay);
+addCardCloseButtonPopup.addEventListener('click', () => closePopup(popupTypeAddCard));
 
 // закрытие открытых карточек
-popupTypeOpenCard.addEventListener('click', closePopup);
-openCardCloseButtonPopup.addEventListener('click', closePopup);
+popupTypeOpenCard.addEventListener('click', closeOverlay);
+openCardCloseButtonPopup.addEventListener('click', () => closePopup(popupTypeOpenCard));
 
 //сабмиты попапов
 formEditElement.addEventListener('submit', editFormSubmit);
