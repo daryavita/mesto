@@ -44,9 +44,7 @@ function closePopup(popup) {
 
 function closeOverlay(evt) {
     if (evt.target.classList.contains('popup_opened')) {
-        closePopup(popupTypeEdit)
-        closePopup(popupTypeAddCard)
-        closePopup(popupTypeOpenCard)
+        closePopup(evt.target)
     }
 }
 
@@ -120,16 +118,16 @@ function renderCard(cardData) {
 
 // открытие и закрытие попапа профиля
 editProfileButton.addEventListener('click', editPopup);
-popupTypeEdit.addEventListener('click', closeOverlay);
+popupTypeEdit.addEventListener('click', (evt) => closeOverlay(evt, popupTypeEdit));
 editCloseButtonPopup.addEventListener('click', () => closePopup(popupTypeEdit));
 
 // открытие и закрытие попапа добавления карточек
 addCardProfileButton.addEventListener('click', () => openPopup(popupTypeAddCard));
-popupTypeAddCard.addEventListener('click', closeOverlay);
+popupTypeAddCard.addEventListener('click', (evt) => closeOverlay(evt, popupTypeAddCard));
 addCardCloseButtonPopup.addEventListener('click', () => closePopup(popupTypeAddCard));
 
 // закрытие открытых карточек
-popupTypeOpenCard.addEventListener('click', closeOverlay);
+popupTypeOpenCard.addEventListener('click', (evt) => closeOverlay(evt, popupTypeOpenCard));
 openCardCloseButtonPopup.addEventListener('click', () => closePopup(popupTypeOpenCard));
 
 //сабмиты попапов

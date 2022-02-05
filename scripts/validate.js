@@ -15,16 +15,25 @@ function hideError (input, errorContainer, {inputErrorClass, errorClass}) {
     errorContainer.textContent = " ";
 }
 
-function toggleButton (form, {submitButtonSelector, inactiveButtonClass}) {
-    const button = form.querySelector(submitButtonSelector);
-    const isFormValid = form.checkValidity()
+function enableSubmitButton(form, {submitButtonSelector, inactiveButtonClass}) { 
+    const button = form.querySelector(submitButtonSelector);  
+    button.classList.remove(inactiveButtonClass);
+    button.removeAttribute('disabled');
+}
 
+function disableSubmitButton(form, {submitButtonSelector, inactiveButtonClass}) {
+    const button = form.querySelector(submitButtonSelector);
+    button.classList.add(inactiveButtonClass);
+    button.setAttribute('disabled', 'disabled');
+}
+
+function toggleButton (form, {submitButtonSelector, inactiveButtonClass}) {
+    const isFormValid = form.checkValidity()
+    
     if (isFormValid) {
-        button.classList.remove(inactiveButtonClass);
-        button.removeAttribute('disabled');
+        enableSubmitButton(form, {submitButtonSelector, inactiveButtonClass})
     } else {
-        button.classList.add(inactiveButtonClass);
-        button.setAttribute('disabled', 'disabled');
+        disableSubmitButton(form, {submitButtonSelector, inactiveButtonClass})
     }
 }
 
@@ -41,7 +50,7 @@ function validateInput(form, input, classes) {
 }
 
 
-function enableValidation({ formSelector, inputSelector, ...rest }) {
+function enableValidation({formSelector, inputSelector, ...rest }, button) {
     const forms = document.querySelectorAll(formSelector);
 
     forms.forEach(form => {
@@ -55,7 +64,9 @@ function enableValidation({ formSelector, inputSelector, ...rest }) {
             });
         })
 
-        form.addEventListener('reset', () =>  toggleButton(form, rest));
+        form.addEventListener('reset', () =>  disableSubmitButton(form, rest)); 
+        
+        toggleButton(form, rest)
     })
 };
 
