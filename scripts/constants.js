@@ -25,7 +25,7 @@ export const initialCards = [
     }
 ];
 
-export const enableValidation = {
+export const config = {
     formSelector: '.popup__form',
     inputSelector: '.popup__input-info',
     submitButtonSelector: '.popup__submit',
@@ -33,7 +33,3 @@ export const enableValidation = {
     errorClass: 'popup__error_visible',
     inactiveButtonClass: 'popup__submit_disabled',
 };
-
-export const popupTypeOpenCard = document.querySelector('.popup-open-card');
-export const popupCardImage = document.querySelector('.popup-open-card__image');
-export const popupCardtTitle = document.querySelector('.popup-open-card__title');

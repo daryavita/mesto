@@ -50,10 +50,9 @@ export class FormValidator {
         } else {
             this._showError(input, errorContainer);
         }
-    
+        
         this._toggleButton();
     }
-
 
     enableValidation() {
 
