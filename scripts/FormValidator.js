@@ -15,18 +15,18 @@ export class FormValidator {
         errorContainer.classList.add(this._errorClass);
         errorContainer.textContent = input.validationMessage;
     }
-    
+
     _hideError = (input, errorContainer) => {
         input.classList.remove(this._inputErrorClass);
         errorContainer.classList.remove(this._errorClass);
         errorContainer.textContent = " ";
     }
 
-    _enableSubmitButton = () => { 
+    _enableSubmitButton = () => {
         this._button.classList.remove(this._inactiveButtonClass);
         this._button.removeAttribute('disabled');
     }
-    
+
     _disableSubmitButton = () => {
         this._button.classList.add(this._inactiveButtonClass);
         this._button.setAttribute('disabled', 'disabled');
@@ -34,7 +34,7 @@ export class FormValidator {
 
     _toggleButton = () => {
         const isFormValid = this._form.checkValidity();
-        
+
         if (isFormValid) {
             this._enableSubmitButton();
         } else {
@@ -44,13 +44,13 @@ export class FormValidator {
 
     _validateInput = (input) => {
         const errorContainer = this._form.querySelector(`#${input.id}-error`);
-    
+
         if (input.validity.valid) {
             this._hideError(input, errorContainer);
         } else {
             this._showError(input, errorContainer);
         }
-        
+
         this._toggleButton();
     }
 
@@ -59,7 +59,7 @@ export class FormValidator {
         this._form.addEventListener('submit', (evt) => {
             evt.preventDefault();
         });
-        
+
         this._inputs.forEach(input => {
             input.addEventListener('input', () => {
                 this._validateInput(input);
