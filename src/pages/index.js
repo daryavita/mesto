@@ -25,9 +25,6 @@ const enableValidation = (config) => {
 
 enableValidation(config);
 
-formValidators['editform']._disableSubmitButton()
-formValidators['addform']._disableSubmitButton()
-
 // форма профиля
 
 const popupTypeEditForm = new PopupWithForm({
@@ -48,7 +45,8 @@ editProfileButton.addEventListener('click', () => {
     popupTypeEditForm.open();
     const {name, job} = userInfo.getUserInfo()
     nameProfileInput.value = name;
-    jobProfileInput.value = job;
+    jobProfileInput.value = job; 
+    formValidators['editform'].resetValidation()
 });
 
 // отрисовка карточек и форма добавления
@@ -84,6 +82,7 @@ popupTypeAddCards.setEventListeners();
 
 addCardProfileButton.addEventListener('click', () => {
     popupTypeAddCards.open();
+    popupTypeAddCards.resetValidation()
 });
 
 const popupWithImage = new PopupWithImage('.popup-open-card');

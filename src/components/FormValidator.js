@@ -17,6 +17,8 @@ export class FormValidator {
     }
 
     _hideError = (input, errorContainer) => {
+        console.log('hide', errorContainer) // undefined
+        
         input.classList.remove(this._inputErrorClass);
         errorContainer.classList.remove(this._errorClass);
         errorContainer.textContent = " ";
@@ -30,6 +32,16 @@ export class FormValidator {
     _disableSubmitButton = () => {
         this._button.classList.add(this._inactiveButtonClass);
         this._button.setAttribute('disabled', 'disabled');
+    }
+
+    resetValidation(input) {
+        this._toggleButton();
+
+        const errorContainer = this._form.querySelector(`#${input.id}-error`);
+  
+        this._inputs.forEach((input) => {
+          this._hideError(input, errorContainer)
+        });
     }
 
     _toggleButton = () => {
