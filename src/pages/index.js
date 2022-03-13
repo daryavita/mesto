@@ -82,7 +82,7 @@ popupTypeAddCards.setEventListeners();
 
 addCardProfileButton.addEventListener('click', () => {
     popupTypeAddCards.open();
-    popupTypeAddCards.resetValidation()
+    formValidators['addform'].resetValidation()
 });
 
 const popupWithImage = new PopupWithImage('.popup-open-card');
