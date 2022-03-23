@@ -15,11 +15,14 @@
 
         <main class="content">
             <section class="profile">
-                <img src="<%=require('./images/avatar.jpg')%>" alt="аватар" class="profile__avatar">
+                <div class="profile__avatar-container">
+                    <img src="https://avatars.mds.yandex.net/get-zen_doc/4460346/pub_6085d3c1e2c7114111efc2a2_6085e4803b735b52f85124ce/scale_1200" alt="аватар" class="profile__avatar">
+                    <button type="button" class="profile__add-avatar-button" aria-label="Добавить"></button>
+                </div>
                 <div class="profile__info">
                     <div class="profile__text">
-                        <h1 class="profile__title">Жак-Ив Кусто</h1>
-                        <p class="profile__subtitle">Исследователь океана</p>
+                        <h1 class="profile__title"></h1>
+                        <p class="profile__subtitle"></p>
                     </div>
                     <button type="button" class="profile__edit-button button-hover" aria-label="Редактировать"></button>
                 </div>
@@ -53,8 +56,8 @@
                         <span class="popup__error popup__error_visible" id="job-input-error"></span>
                     </div>
                 </fieldset>
-                <button type="submit" class="popup__submit popup__submit_disabled" aria-label="Сохранить"
-                    >Сохранить</button>
+                <button type="submit" class="popup__submit popup__submit_disabled"
+                    aria-label="Сохранить">Сохранить</button>
             </form>
         </div>
     </div>
@@ -76,8 +79,7 @@
                         <span class="popup__error popup__error_visible" id="link-card-input-error"></span>
                     </div>
                 </fieldset>
-                <button type="submit" class="popup__submit popup__submit_disabled" aria-label="Создать"
-                    >Создать</button>
+                <button type="submit" class="popup__submit popup__submit_disabled" aria-label="Создать">Создать</button>
             </form>
         </div>
     </div>
@@ -90,15 +92,46 @@
         </figure>
     </div>
 
+    <div class="popup popup_type_delete-card">
+        <div class="popup__container">
+            <button type="button" class="popup__close button-hover" aria-label="Закрыть"></button>
+            <h3 class="popup__title">Вы уверены?</h3>
+            <form class="popup__form" name="deleteform">
+                <button type="submit" class="popup__submit" aria-label="Сохранить">Да</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="popup popup_type_new-avatar">
+        <div class="popup__container">
+            <button type="button" class="popup__close button-hover" aria-label="Закрыть"></button>
+            <h3 class="popup__title">Обновите аватар</h3>
+            <form class="popup__form" name="avatarform" novalidate>
+                <fieldset class="popup__profile-info">
+                    <div><input type="url" id="link-avatar-input" name="avatar"
+                            class="popup__input-info popup__input-info_type_link-avatar" value=""
+                            placeholder="Ссылка на картинку" required>
+                        <span class="popup__error popup__error_visible" id="link-avatar-input-error"></span>
+                    </div>
+                </fieldset>
+                <button type="submit" class="popup__submit popup__submit_disabled" aria-label="Создать">Сохранить</button>
+            </form>
+        </div>
+    </div>
+
     <template class="cards-template">
         <li class="card">
             <button type="button" class="card__delete button-hover" aria-label="Удалить"></button>
             <img src="#" alt="" class="card__image">
             <div class="card__container">
                 <h2 class="card__title"></h2>
-                <button type="button" class="card__like" aria-label="Нравится"></button>
+                <div class="card__like-container">
+                    <button type="button" class="card__like" aria-label="Нравится"></button>
+                    <span class="card__like-count"></span>
+                </div>
             </div>
         </li>
     </template>
 </body>
+
 </html>
