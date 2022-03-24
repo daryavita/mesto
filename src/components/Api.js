@@ -1,25 +1,25 @@
 class Api {
     constructor({ baseUrl, headers }) {
-      this._headers = headers;
-      this._baseUrl = baseUrl;
+        this._headers = headers;
+        this._baseUrl = baseUrl;
     }
 
     getProfile() {
         return fetch(`${this._baseUrl}/users/me`, {
             headers: this._headers
         })
-        .then(res => res.ok ? res.json() : Promise.reject(res.status))
-        .catch(console.log)
+            .then(res => res.ok ? res.json() : Promise.reject(res.status))
+            .catch(console.log)
     }
-  
+
     getInitialCards() {
         return fetch(`${this._baseUrl}/cards`, {
             headers: this._headers
         })
-        .then(res => res.ok ? res.json() : Promise.reject(res.status))
-        .catch(console.log)
+            .then(res => res.ok ? res.json() : Promise.reject(res.status))
+            .catch(console.log)
     }
-  
+
     editProfile(name, about) {
         return fetch(`${this._baseUrl}/users/me`, {
             method: "PATCH",
@@ -29,8 +29,8 @@ class Api {
                 about
             })
         })
-        .then(res => res.ok ? res.json() : Promise.reject(res.status))
-        .catch(console.log)
+            .then(res => res.ok ? res.json() : Promise.reject(res.status))
+            .catch(console.log)
     }
 
     addCard(name, link) {
@@ -42,8 +42,8 @@ class Api {
                 link
             })
         })
-        .then(res => res.ok ? res.json() : Promise.reject(res.status))
-        .catch(console.log)
+            .then(res => res.ok ? res.json() : Promise.reject(res.status))
+            .catch(console.log)
     }
 
     deleteCardApi(id) {
@@ -51,8 +51,8 @@ class Api {
             method: "DELETE",
             headers: this._headers,
         })
-        .then(res => res.ok ? res.json() : Promise.reject(res.status))
-        .catch(console.log)
+            .then(res => res.ok ? res.json() : Promise.reject(res.status))
+            .catch(console.log)
     }
 
     addLike(id) {
@@ -60,8 +60,8 @@ class Api {
             method: "PUT",
             headers: this._headers,
         })
-        .then(res => res.ok ? res.json() : Promise.reject(res.status))
-        .catch(console.log)
+            .then(res => res.ok ? res.json() : Promise.reject(res.status))
+            .catch(console.log)
     }
 
     deleteLike(id) {
@@ -69,8 +69,8 @@ class Api {
             method: "DELETE",
             headers: this._headers,
         })
-        .then(res => res.ok ? res.json() : Promise.reject(res.status))
-        .catch(console.log)
+            .then(res => res.ok ? res.json() : Promise.reject(res.status))
+            .catch(console.log)
     }
 
     editAvatar(avatar) {
@@ -81,18 +81,15 @@ class Api {
                 avatar
             })
         })
-        .then(res => res.ok ? res.json() : Promise.reject(res.status))
-        .catch(console.log)
+            .then(res => res.ok ? res.json() : Promise.reject(res.status))
+            .catch(console.log)
     }
+}
 
-
-
-  }
-  
-  export const api = new Api({
+export const api = new Api({
     baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-37',
     headers: {
-      authorization: '946ba5b7-e5b2-4dad-b0a9-85a07c6c499d',
-      'Content-Type': 'application/json'
+        authorization: '946ba5b7-e5b2-4dad-b0a9-85a07c6c499d',
+        'Content-Type': 'application/json'
     }
-  }); 
+}); 

@@ -6,17 +6,12 @@ export class Card {
         this._cardId = data._id;
         this._userId = userId;
         this._ownerId = data.owner._id;
-
         this._template = document.querySelector(cardTemplateSelector).content;
-        
-
         this._cardElement = this._template.cloneNode(true);
         this._card = this._cardElement.querySelector('.card')
         this._likeCount = this._card.querySelector('.card__like-count');
-
         this._handleCardClick = handleCardClick;
         this._handleDeleteClick = handleDeleteClick;
-        
         this._handleLikeClick = handleLikeClick;
     }
 
@@ -37,11 +32,11 @@ export class Card {
         return userHasLikedCard
     }
 
-    setLikes(countLikes){
+    setLikes(countLikes) {
         this._likes = countLikes;
         this._likeCount.textContent = this._likes.length;
 
-        if(this.isLicked()) {
+        if (this.isLicked()) {
             this._likeCard()
         } else {
             this._likeCardDisabled()
@@ -51,7 +46,6 @@ export class Card {
 
     _setEventListeners = () => {
         this._cardDeleteButton.addEventListener('click', () => this._handleDeleteClick(this._cardId))
-        // this._cardDeleteButton.addEventListener('click', () => console.log('this._cardId', this._cardId));
         this._cardLikeButton.addEventListener('click', () => this._handleLikeClick(this._cardId));
         this._cardImage.addEventListener('click', () => {
             this._handleCardClick(this._name, this._link)
@@ -71,12 +65,12 @@ export class Card {
 
         this._setEventListeners();
 
-        if(this._ownerId !== this._userId) {
+        if (this._ownerId !== this._userId) {
             this._cardDeleteButton.style.display = 'none'
         }
 
         return this._cardElement;
-        
+
     };
 
 }

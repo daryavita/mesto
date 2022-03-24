@@ -1,4 +1,4 @@
-import { initialCards, config, cardListSelector, cardTemplateSelector, formEditElement, formAddElement, nameProfileInput, jobProfileInput, editProfileButton, addCardProfileButton, editAvatarButton } from '../utils/constants.js';
+import { config, cardListSelector, cardTemplateSelector, nameProfileInput, jobProfileInput, editProfileButton, addCardProfileButton, editAvatarButton } from '../utils/constants.js';
 import { Card } from '../components/Card.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { Section } from '../components/Section.js'
@@ -10,16 +10,13 @@ import { api } from '../components/Api.js';
 import '../pages/index.css'
 
 //api
-
 let userId
 
 api.getProfile()
     .then(res => {
-        console.log('данные профиля', res)
         userInfo.setUserInfo(res.name, res.about, res.avatar)
         userId = res._id
     })
-
 
 api.getInitialCards()
     .then(initialCards => {
@@ -29,8 +26,6 @@ api.getInitialCards()
             cardsList.addItem(cardElement);
         })
     })
-
-
 
 // валидация
 
@@ -56,7 +51,12 @@ const popupTypeEditForm = new PopupWithForm({
     handleFormSubmit: (data) => {
         api.editProfile(data.name, data.job)
             .then(res => {
+                changeTextButton({ popupSelector: '.popup_type_edit', isLoading: true })
                 userInfo.setUserInfo(res.name, res.about, res.avatar);
+            })
+            .finally(() => {
+                changeTextButton({ popupSelector: '.popup_type_edit', isLoading: false })
+                popupTypeEditForm.close()
             })
     }
 })
@@ -81,9 +81,14 @@ const popupTypeAddCards = new PopupWithForm({
     handleFormSubmit: (data) => {
         api.addCard(data.name, data.link)
             .then(res => {
+                changeTextButton({ popupSelector: '.popup_type_add-card', isLoading: true })
                 createCard(res);
                 const cardElement = createCard(res);
                 cardsList.addItem(cardElement);
+            })
+            .finally(() => {
+                changeTextButton({ popupSelector: '.popup_type_add-card', isLoading: false })
+                popupTypeAddCards.close()
             })
     }
 })
@@ -94,22 +99,18 @@ const avatarPopup = new PopupWithForm({
     popupSelector: '.popup_type_new-avatar',
     handleFormSubmit: (data) => {
         api.editAvatar(data.avatar)
-        .then(res => {
-            userInfo.setUserInfo(res.name, res.about, res.avatar);
-        })
+            .then(res => {
+                changeTextButton({ popupSelector: '.popup_type_new-avatar', isLoading: true })
+                userInfo.setUserInfo(res.name, res.about, res.avatar);
+            })
+            .finally(() => {
+                changeTextButton({ popupSelector: '.popup_type_new-avatar', isLoading: false })
+                avatarPopup.close()
+            })
     }
 })
 
-
-
 // функции
-
-
-// function createCard(data) {
-//     const card = new Card(data, cardTemplateSelector, handleCardClick, handleDeleteClick, userId, handleLikeClick);
-//     const cardElement = card.createCard();
-//     return cardElement;
-// }
 
 cardsList.render();
 
@@ -124,6 +125,7 @@ function createCard(data) {
                 api.deleteCardApi(id)
                     .then(res => {
                         card.deleteCard()
+                        confirmPopup.close()
                     })
             })
         },
@@ -146,49 +148,19 @@ function createCard(data) {
     return cardElement;
 }
 
-
-// function handleDeleteClick(Id) { //что-то надо с экземпляром класса сделать
-//     console.log('handleIndex', id, card)
-//    confirmPopup.open();
-//    confirmPopup.changeSubmitHandler(() => {
-//        api.deleteCardApi(id, card)
-//            .then(res => {
-//                console.log('data', id, card)
-//                // console.log('card', card)
-//                // console.log('deleteCard()', deleteCard())
-//                card.deleteCard() // нет функции
-//                console.log(res)
-//            })
-//    })
-// }
-
-
-// function handleDeleteClick(id, card) { // работает без класса, нет видит фукцию deleteCard
-//      console.log('handle', id, card)
-//     confirmPopup.open();
-//     confirmPopup.changeSubmitHandler(() => {
-//         api.deleteCardApi(id)
-//             .then(() => {
-//                 card.remove() 
-//             })
-//     })
-// }
-
-
-// function handleLikeClick(id) {
-//     console.log('like')
-//     api.addLike(id)
-//         .then( res => {
-//             // card.setLikes(res.likes)
-//             console.log(res)
-
-//         })
-// }
+function changeTextButton({ popupSelector, isLoading }) {
+    const popup = document.querySelector(popupSelector)
+    const button = popup.querySelector('.popup__submit')
+    if (isLoading) {
+        button.textContent = 'Сохранение...'
+    } else {
+        button.textContent = 'Сохранить'
+    }
+}
 
 function handleCardClick(name, link) {
     popupWithImage.open(name, link)
 }
-
 
 //вызовы
 
@@ -207,9 +179,7 @@ addCardProfileButton.addEventListener('click', () => {
 
 editAvatarButton.addEventListener('click', () => {
     avatarPopup.open();
-    formValidators['avatarform'].resetValidation()
 })
-
 
 popupTypeEditForm.setEventListeners();
 popupTypeAddCards.setEventListeners();
