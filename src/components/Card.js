@@ -17,6 +17,7 @@ export class Card {
 
     deleteCard() {
         this._card.remove();
+        this._card = null;
     };
 
     _likeCard() {
@@ -70,7 +71,6 @@ export class Card {
         }
 
         return this._cardElement;
-
     };
 
 }

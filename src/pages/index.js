@@ -8,24 +8,18 @@ import { UserInfo } from '../components/UserInfo.js';
 import { api } from '../components/Api.js';
 
 import '../pages/index.css'
+import { PopupWithConfirm } from '../components/PopupWithConfirm.js';
 
 //api
 let userId
 
-api.getProfile()
-    .then(res => {
-        userInfo.setUserInfo(res.name, res.about, res.avatar)
-        userId = res._id
+Promise.all([api.getProfile(), api.getInitialCards()])
+    .then(([profileData, initialCards]) => {
+        userInfo.setUserInfo(profileData.name, profileData.about, profileData.avatar)
+        userId = profileData._id
+        cardsList.render(initialCards);
     })
-
-api.getInitialCards()
-    .then(initialCards => {
-        initialCards.forEach(data => {
-            createCard(data);
-            const cardElement = createCard(data);
-            cardsList.addItem(cardElement);
-        })
-    })
+    .catch(err => console.log(`Ошибка ${err}`))
 
 // валидация
 
@@ -49,14 +43,15 @@ enableValidation(config);
 const popupTypeEditForm = new PopupWithForm({
     popupSelector: '.popup_type_edit',
     handleFormSubmit: (data) => {
+        changeTextButton({ popupSelector: '.popup_type_edit', isLoading: true })
         api.editProfile(data.name, data.job)
             .then(res => {
-                changeTextButton({ popupSelector: '.popup_type_edit', isLoading: true })
                 userInfo.setUserInfo(res.name, res.about, res.avatar);
+                popupTypeEditForm.close()
             })
+            .catch(err => console.log(`Ошибка ${err}`))
             .finally(() => {
                 changeTextButton({ popupSelector: '.popup_type_edit', isLoading: false })
-                popupTypeEditForm.close()
             })
     }
 })
@@ -68,7 +63,6 @@ const userInfo = new UserInfo({
 })
 
 const cardsList = new Section({
-    items: [],
     renderer: (data) => {
         createCard(data);
         const cardElement = createCard(data);
@@ -79,40 +73,42 @@ const cardsList = new Section({
 const popupTypeAddCards = new PopupWithForm({
     popupSelector: '.popup_type_add-card',
     handleFormSubmit: (data) => {
+        changeTextButton({ popupSelector: '.popup_type_add-card', isLoading: true })
         api.addCard(data.name, data.link)
             .then(res => {
-                changeTextButton({ popupSelector: '.popup_type_add-card', isLoading: true })
                 createCard(res);
                 const cardElement = createCard(res);
                 cardsList.addItem(cardElement);
+                popupTypeAddCards.close()
             })
+            .catch(err => console.log(`Ошибка ${err}`))
             .finally(() => {
                 changeTextButton({ popupSelector: '.popup_type_add-card', isLoading: false })
-                popupTypeAddCards.close()
             })
     }
 })
 
 const popupWithImage = new PopupWithImage('.popup-open-card');
-const confirmPopup = new PopupWithForm({ popupSelector: '.popup_type_delete-card' })
+
 const avatarPopup = new PopupWithForm({
     popupSelector: '.popup_type_new-avatar',
     handleFormSubmit: (data) => {
+        changeTextButton({ popupSelector: '.popup_type_new-avatar', isLoading: true })
         api.editAvatar(data.avatar)
             .then(res => {
-                changeTextButton({ popupSelector: '.popup_type_new-avatar', isLoading: true })
                 userInfo.setUserInfo(res.name, res.about, res.avatar);
+                avatarPopup.close()
             })
+            .catch(err => console.log(`Ошибка ${err}`))
             .finally(() => {
                 changeTextButton({ popupSelector: '.popup_type_new-avatar', isLoading: false })
-                avatarPopup.close()
             })
     }
 })
 
-// функции
+const confirmPopup = new PopupWithConfirm({ popupSelector: '.popup_type_delete-card' })
 
-cardsList.render();
+// функции
 
 function createCard(data) {
     const card = new Card(
@@ -127,6 +123,7 @@ function createCard(data) {
                         card.deleteCard()
                         confirmPopup.close()
                     })
+                    .catch(err => console.log(`Ошибка ${err}`))
             })
         },
         userId,
@@ -136,11 +133,13 @@ function createCard(data) {
                     .then(res => {
                         card.setLikes(res.likes)
                     })
+                    .catch(err => console.log(`Ошибка ${err}`))
             } else {
                 api.addLike(id)
                     .then(res => {
                         card.setLikes(res.likes)
                     })
+                    .catch(err => console.log(`Ошибка ${err}`))
             }
         }
     );
@@ -165,19 +164,20 @@ function handleCardClick(name, link) {
 //вызовы
 
 editProfileButton.addEventListener('click', () => {
-    popupTypeEditForm.open();
     const { name, job } = userInfo.getUserInfo()
     nameProfileInput.value = name;
     jobProfileInput.value = job;
     formValidators['editform'].resetValidation()
+    popupTypeEditForm.open();
 });
 
 addCardProfileButton.addEventListener('click', () => {
-    popupTypeAddCards.open();
     formValidators['addform'].resetValidation()
+    popupTypeAddCards.open();
 });
 
 editAvatarButton.addEventListener('click', () => {
+    formValidators['avatarform'].resetValidation()
     avatarPopup.open();
 })
 

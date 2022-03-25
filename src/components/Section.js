@@ -1,13 +1,14 @@
 export class Section {
-    constructor({ items, renderer }, containerSelector) {
-        this._initialCards = items;
+    constructor({ renderer }, containerSelector) {
         this._renderer = renderer;
         this._container = document.querySelector(containerSelector);
     }
 
-    render() {
-        this._initialCards.forEach(card =>
-            this._renderer(card))
+    render(items) {
+        items.reverse();
+        items.forEach((card) => {
+            this._renderer(card);
+        })
     }
 
     addItem(element) {
